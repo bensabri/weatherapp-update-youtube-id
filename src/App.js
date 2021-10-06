@@ -1,25 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import axios from 'axios';
+import AddCity from './components/AddCity';
+import UpdateCity from './components/UpdateCity';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [country, setCountry] = useState('');
+	const [city, setCity] = useState('');
+	const [youtubeId, setYoutubeId] = useState('');
+	const [dataCity, setDataCity] = useState([]);
+
+	const showCity = () => {
+		axios.get('http://localhost:5000/city').then((res) => {
+			setDataCity(res.data);
+		});
+	};
+
+	return (
+		<div className="App">
+			<AddCity
+				setCountry={setCountry}
+				setCity={setCity}
+				setYoutubeId={setYoutubeId}
+				country={country}
+				city={city}
+				youtubeId={youtubeId}
+			/>
+			<button onClick={showCity}>Show City</button>
+			<UpdateCity dataCity={dataCity} />
+		</div>
+	);
 }
 
 export default App;
