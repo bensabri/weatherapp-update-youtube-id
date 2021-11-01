@@ -8,16 +8,23 @@ const AddCity = ({
 	country,
 	city,
 	youtubeId,
+	dataCity,
+	setDataCity,
 }) => {
 	const addCity = () => {
 		axios
 			.post('http://localhost:5000/create', {
 				country: country,
 				city: city,
-				youtubeId: youtubeId,
+				youtubeid: youtubeId,
 			})
 			.then((res) => {
 				console.log('Success');
+				setDataCity([
+					...dataCity,
+					{ country: country, city: city, youtubeid: youtubeId },
+				]);
+				setCountry('');
 			});
 	};
 

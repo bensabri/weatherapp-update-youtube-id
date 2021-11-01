@@ -1,0 +1,22 @@
+.city-details-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	border: solid 2px black;
+	margin: 50px;
+	max-width: 50%;
+}
+.city-details-container p {
+	padding: 10px;
+	font-size: 1.2rem;
+}
+select {
+	padding: 10px;
+}
+.edit-container {
+	opacity: 0;
+	transition: opacity 250ms ease-in-out;
+}
+.edit-container.open {
+	opacity: 1;
+}
