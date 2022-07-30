@@ -11,7 +11,7 @@ const App: FC = () => {
 	const [dataCity, setDataCity] = useState<[]>([]);
 
 	return (
-		<div className="font-bold">
+		<div className="font-bold bg-gray-100 h-screen flex justify-center items-center">
 			<AddCity
 				country={country}
 				city={city}
