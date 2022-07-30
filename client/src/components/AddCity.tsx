@@ -33,8 +33,8 @@ export const AddCity: FC<Props> = ({
 	};
 
 	return (
-		<div className="max-w-xl flex flex-col bg-white px-10 py-10 shadow-xl rounded-lg w-1/2 h-auto">
-			<h1 className="text-center mb-5 text-gray-700">
+		<div className="md:max-w-xl flex flex-col bg-white px-10 py-10 shadow-xl rounded-lg w-full md:w-1/2 h-auto">
+			<h1 className="text-center mb-5 text-gray-700 font-bold">
 				ADD CITIES YOUTUBE
 			</h1>
 			<form onSubmit={handleFormSubmit}>
