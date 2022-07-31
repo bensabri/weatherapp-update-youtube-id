@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { CitiesList } from './CitiesList';
+import axios from 'axios';
 
 interface Props {
 	country: string;
@@ -24,6 +25,21 @@ export const AddIdCity: FC<Props> = ({
 		event: React.FormEvent<HTMLFormElement>
 	): void => {
 		event.preventDefault();
+		axios
+			.post('http://localhost:5000/api/insert', {
+				country: country,
+				city: city,
+				youtubeId: youtubeId,
+			})
+			.then(() => {
+				console.log('Success');
+				setCountry('');
+				setCity('');
+				setYoutubeId('');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 		console.log(country, city, youtubeId);
 	};
 
