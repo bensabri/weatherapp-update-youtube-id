@@ -1,13 +1,19 @@
 import { FC, useState } from 'react';
 import { Modal } from '@mantine/core';
 import { GoPencil } from 'react-icons/go';
+import axios from 'axios';
 
 export interface IEditCityProps {
 	city: string;
+	id: number;
 }
 
-export const EditCity: FC<IEditCityProps> = ({ city }: IEditCityProps) => {
+export const EditCity: FC<IEditCityProps> = ({ city, id }: IEditCityProps) => {
 	const [opened, setOpened] = useState<boolean>(false);
+
+	const handleDelete: Function = (id: number): void => {
+		axios.delete(`http://localhost:5000/api/delete/${id}`);
+	};
 
 	return (
 		<div className="col-span-1">
@@ -49,6 +55,17 @@ export const EditCity: FC<IEditCityProps> = ({ city }: IEditCityProps) => {
 							/>
 						</div>
 					</form>
+					<div className="w-full flex justify-center ">
+						<button
+							className="hover:-translate-y-1 transition-all text-white bg-[#FF4D5A] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+							onClick={() => {
+								handleDelete(id);
+								setOpened(false);
+							}}
+						>
+							Delete
+						</button>
+					</div>
 				</div>
 			</Modal>
 			<div className="cursor-pointer" onClick={() => setOpened(true)}>

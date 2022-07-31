@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { CitiesList } from './CitiesList';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ interface Props {
 	setCountry: React.Dispatch<React.SetStateAction<string>>;
 	setCity: React.Dispatch<React.SetStateAction<string>>;
 	setYoutubeId: React.Dispatch<React.SetStateAction<string>>;
-	setDataCity: React.Dispatch<React.SetStateAction<[]>>;
+	setDataCity: React.Dispatch<React.SetStateAction<[{}]>>;
 }
 
 export const AddIdCity: FC<Props> = ({
@@ -20,27 +20,32 @@ export const AddIdCity: FC<Props> = ({
 	country,
 	city,
 	youtubeId,
+	dataCity,
+	setDataCity,
 }) => {
+	useEffect(() => {
+		axios.get('http://localhost:5000/api/get').then((res) => {
+			setDataCity(res.data);
+		});
+	}, []);
+
 	const handleFormSubmit = (
 		event: React.FormEvent<HTMLFormElement>
 	): void => {
 		event.preventDefault();
-		axios
-			.post('http://localhost:5000/api/insert', {
+		axios.post('http://localhost:5000/api/insert', {
+			country: country,
+			city: city,
+			youtube_id: youtubeId,
+		});
+		setDataCity([
+			...dataCity,
+			{
 				country: country,
 				city: city,
-				youtubeId: youtubeId,
-			})
-			.then(() => {
-				console.log('Success');
-				setCountry('');
-				setCity('');
-				setYoutubeId('');
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-		console.log(country, city, youtubeId);
+				youtube_id: youtubeId,
+			},
+		]);
 	};
 
 	const handleClearInput = () => {
@@ -136,7 +141,7 @@ export const AddIdCity: FC<Props> = ({
 				</div>
 				<div className="border-r-2 col-span-1 mx-auto" />
 
-				<CitiesList />
+				<CitiesList dataCity={dataCity} />
 			</div>
 		</div>
 	);

@@ -17,18 +17,34 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.get();
+app.get('/api/get', (req, res) => {
+	const sqlSelect = 'SELECT * FROM youtube_ids';
+	db.query(sqlSelect, (err, result) => {
+		res.status(201).send(result);
+	});
+});
 
 app.post('/api/insert', (req, res) => {
-	const { country, city, youtubeId } = req.body;
+	const { country, city, youtube_id } = req.body;
 	const sqlInsert =
 		'INSERT INTO youtube_ids (country, city, youtube_id) VALUES (?,?,?) ';
-	db.query(sqlInsert, [country, city, youtubeId], (err, result) => {
+	db.query(sqlInsert, [country, city, youtube_id], (err, result) => {
 		console.log(result);
 		console.log(err);
 	});
 });
 
+app.delete('/api/delete/:id', (req, res) => {
+	const { id } = req.params;
+	db.query('DELETE FROM youtube_ids WHERE id = ?', id, (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.send(result);
+		}
+	});
+});
+
 app.listen(port, () => {
-	console.log('Running on port 3001');
+	console.log('Running on port 5000');
 });

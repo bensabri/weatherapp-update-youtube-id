@@ -9,7 +9,7 @@ const App: FC = () => {
 	const [youtubeId, setYoutubeId] = useState<string>('');
 	const [newId, setNewId] = useState<string>('');
 	const [editingCity, setEditingCity] = useState<boolean>(false);
-	const [dataCity, setDataCity] = useState<[]>([]);
+	const [dataCity, setDataCity] = useState<any>([]);
 
 	return (
 		<div className="bg-gray-100 h-screen">
