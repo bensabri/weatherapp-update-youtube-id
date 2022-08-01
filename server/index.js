@@ -20,11 +20,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/api/get', (req, res) => {
 	const sqlSelect = 'SELECT * FROM youtube_ids';
 	db.query(sqlSelect, (err, result) => {
-		res.status(201).send(result);
+		res.status(200).send(result);
 	});
 });
 
 app.post('/api/insert', (req, res) => {
+	res.status(201).send('Status: OK');
 	const { country, city, youtube_id, id } = req.body;
 	const sqlInsert =
 		'INSERT INTO youtube_ids (country, city, youtube_id, id) VALUES (?,?,?,?) ';
@@ -34,27 +35,24 @@ app.post('/api/insert', (req, res) => {
 	});
 });
 
-app.delete('/api/delete/:youtube_id', (req, res) => {
-	const { youtube_id } = req.params;
-	db.query(
-		'DELETE FROM youtube_ids WHERE youtube_id = ?',
-		youtube_id,
-		(err, result) => {
-			if (err) {
-				console.log(err);
-			} else {
-				res.send(result);
-			}
+app.delete('/api/delete/:id', (req, res) => {
+	const { id } = req.params;
+	db.query('DELETE FROM youtube_ids WHERE id = ?', id, (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.send(result);
 		}
-	);
+	});
 });
 
-// app.put('/api/update:youtube_id', (req, res) => {
-// 	const { youtube_id } = req.params;
-// 	db.query('UPDATE SET youtube_ids youtube_id = WHERE youtube_id ?', [
-// 		youtube_id,
-// 	]);
-// });
+app.put('/api/update', (req, res) => {
+	const { id, youtube_id } = req.body;
+	db.query('UPDATE youtube_ids SET youtube_id = ? WHERE id = ?', [
+		youtube_id,
+		id,
+	]);
+});
 
 app.listen(port, () => {
 	console.log('Running on port 5000');

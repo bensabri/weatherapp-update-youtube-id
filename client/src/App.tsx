@@ -8,9 +8,8 @@ const App: FC = () => {
 	const [country, setCountry] = useState<string>('');
 	const [city, setCity] = useState<string>('');
 	const [youtubeId, setYoutubeId] = useState<string>('');
-	const [id, setId] = useState<number>();
-	const [editingCity, setEditingCity] = useState<boolean>(false);
 	const [dataCity, setDataCity] = useState<IdataCity[]>([]);
+	const [fetchCount, setFetchCount] = useState<number>(0);
 
 	return (
 		<div className="bg-gray-100 h-screen">
@@ -24,6 +23,8 @@ const App: FC = () => {
 				setCity={setCity}
 				setYoutubeId={setYoutubeId}
 				setDataCity={setDataCity}
+				fetchCount={fetchCount}
+				setFetchCount={setFetchCount}
 			/>
 		</div>
 	);

@@ -1,7 +1,5 @@
 import { FC } from 'react';
 
-// export interface IAppProps {}
-
 export const Header: FC = () => {
 	return (
 		<header>
@@ -10,10 +8,9 @@ export const Header: FC = () => {
 					Weather Panel
 				</h2>
 				<div className="mx-auto">
-					<ul className="z-50 flex items-center space-x-5 md:space-x-10">
-						<li>Home</li>
-						<li>New City</li>
-					</ul>
+					<p className="z-50 text-xs md:text-md flex items-center md:space-x-10">
+						Add new video content to the wheater app
+					</p>
 				</div>
 			</div>
 		</header>

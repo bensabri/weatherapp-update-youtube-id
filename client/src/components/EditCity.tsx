@@ -1,25 +1,48 @@
 import { FC, useState } from 'react';
 import { Modal } from '@mantine/core';
 import { GoPencil } from 'react-icons/go';
+import axios from 'axios';
 
 export interface Props {
+	id: number;
 	city: string;
-	youtube_id: string;
-	handleDelete: (id: string) => void;
+	handleDelete: (id: number) => void;
+	youtubeId: string;
+	setYoutubeId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const EditCity: FC<Props> = ({
 	city,
-	youtube_id,
+	id,
 	handleDelete,
+	youtubeId,
+	setYoutubeId,
 }: Props) => {
 	const [opened, setOpened] = useState<boolean>(false);
 
+	const handleUpdate = (id: number) => {
+		if (youtubeId) {
+			axios.put('http://localhost:5000/api/update', {
+				id: id,
+				youtube_id: youtubeId,
+			});
+		} else return alert("Vous n'avez pas entrée de valeur");
+	};
+
 	return (
 		<div className="col-span-1">
-			<Modal opened={opened} onClose={() => setOpened(false)}>
-				<h2 className="text-center text-xl">{`Edit City ${city}`}</h2>
-				<div className="mx-10 mt-16">
+			<Modal
+				classNames={{
+					modal: 'rounded-lg',
+				}}
+				opened={opened}
+				onClose={() => setOpened(false)}
+			>
+				<h2
+					onClick={() => console.log(id)}
+					className="text-center text-xl"
+				>{`Edit City ${city}`}</h2>
+				<div className="mx-10">
 					<form>
 						<div className="flex flex-col mb-5">
 							<label
@@ -35,6 +58,7 @@ export const EditCity: FC<Props> = ({
 								type="text"
 								defaultValue={city}
 								placeholder="enter city"
+								disabled
 								required
 							/>
 						</div>
@@ -51,16 +75,27 @@ export const EditCity: FC<Props> = ({
 								name="video_id"
 								type="text"
 								placeholder="enter video id"
+								onChange={(
+									event: React.ChangeEvent<HTMLInputElement>
+								) => setYoutubeId(event.target.value)}
 								required
 							/>
 						</div>
 					</form>
-					<div className="w-full flex justify-center ">
+					<div className="w-full flex justify-around ">
 						<button
-							className="hover:-translate-y-1 transition-all text-white bg-[#FF4D5A] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+							onClick={() => {
+								handleUpdate(id);
+							}}
+							className="cursor-pointer focus:scale-90 hover:-translate-y-1 transition-all text-white bg-green-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+						>
+							Update
+						</button>
+						<button
+							className="hover:-translate-y-1 focus:scale-90 transition-all text-white bg-[#FF4D5A] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 							onClick={() => {
 								setOpened(false);
-								handleDelete(youtube_id);
+								handleDelete(id);
 							}}
 						>
 							Delete
@@ -68,7 +103,7 @@ export const EditCity: FC<Props> = ({
 					</div>
 				</div>
 			</Modal>
-			<div className="cursor-pointer" onClick={() => setOpened(true)}>
+			<div className=" cursor-pointer" onClick={() => setOpened(true)}>
 				<GoPencil />
 			</div>
 		</div>

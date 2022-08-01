@@ -12,6 +12,8 @@ interface Props {
 	setCity: React.Dispatch<React.SetStateAction<string>>;
 	setYoutubeId: React.Dispatch<React.SetStateAction<string>>;
 	setDataCity: React.Dispatch<React.SetStateAction<IdataCity[]>>;
+	fetchCount: number;
+	setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const AddIdCity: FC<Props> = ({
@@ -23,12 +25,14 @@ export const AddIdCity: FC<Props> = ({
 	youtubeId,
 	dataCity,
 	setDataCity,
+	fetchCount,
+	setFetchCount,
 }: Props) => {
 	useEffect(() => {
 		axios.get('http://localhost:5000/api/get').then((res) => {
 			setDataCity(res.data);
 		});
-	}, []);
+	}, [fetchCount]);
 
 	const id: number = Math.floor(Math.random() * 100000 + 1);
 
@@ -36,38 +40,44 @@ export const AddIdCity: FC<Props> = ({
 		event: React.FormEvent<HTMLFormElement>
 	): void => {
 		event.preventDefault();
-		axios.post('http://localhost:5000/api/insert', {
-			id: id,
-			country: country,
-			city: city,
-			youtube_id: youtubeId,
-		});
-		setDataCity([
-			...dataCity,
-			{
+		try {
+			axios.post('http://localhost:5000/api/insert', {
 				id: id,
 				country: country,
 				city: city,
 				youtube_id: youtubeId,
-			},
-		]);
+			});
+			setDataCity([
+				...dataCity,
+				{
+					id: id,
+					country: country,
+					city: city,
+					youtube_id: youtubeId,
+				},
+			]);
+			setCountry('');
+			setCity('');
+			setYoutubeId('');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	//delete function
-	const handleDelete = (id: string) => {
-		axios.delete(`http://localhost:5000/api/delete/${id}`);
-	};
-
-	const handleClearInput = () => {
-		setCountry('');
-		setCity('');
-		setYoutubeId('');
+	const handleDelete = (id: number) => {
+		axios
+			.delete(`http://localhost:5000/api/delete/${id}`)
+			.then(() => {
+				setFetchCount((prev) => prev + 1);
+			})
+			.catch(() => console.log('error'));
 	};
 
 	return (
 		<div className="flex justify-center items-center h-5/6">
-			<div className="grid grid-cols-7 w-full h-auto mx-6 bg-white shadow-xl rounded-lg px-10 py-10">
-				<div className="flex flex-col col-span-3">
+			<div className="md:grid grid-cols-7 space-y-5 md:space-y-0 w-full h-auto md:mx-6 bg-white shadow-xl rounded-lg px-10 py-10">
+				<div className=" flex flex-col col-span-3">
 					<h2 className="uppercase text-center mb-5 text-gray-700 font-bold">
 						add new video
 					</h2>
@@ -134,27 +144,30 @@ export const AddIdCity: FC<Props> = ({
 						</div>
 
 						<div className="w-full flex justify-around ">
-							<button
+							{/* <button
 								onClick={handleClearInput}
-								className="cursor-pointer hover:-translate-y-1 transition-all text-white bg-red-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+								className="drop-shadow-xl cursor-pointer focus:scale-90 hover:-translate-y-1 transition-all text-white bg-red-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 							>
 								Clear
-							</button>
-							<button className="cursor-pointer hover:-translate-y-1 transition-all text-white bg-green-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base">
-								Update
-							</button>
+							</button> */}
+
 							<button
 								type="submit"
-								className="cursor-pointer hover:-translate-y-1 transition-all text-white bg-[#0081CB] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+								className="drop-shadow-xl cursor-pointer focus:scale-90 hover:-translate-y-1 transition-all text-white bg-[#0081CB] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 							>
 								Send
 							</button>
 						</div>
 					</form>
 				</div>
-				<div className="border-r-2 col-span-1 mx-auto" />
+				<div className="border-b-2 md:border-r-2 col-span-1 mx-auto" />
 
-				<CitiesList dataCity={dataCity} handleDelete={handleDelete} />
+				<CitiesList
+					dataCity={dataCity}
+					handleDelete={handleDelete}
+					setYoutubeId={setYoutubeId}
+					youtubeId={youtubeId}
+				/>
 			</div>
 		</div>
 	);
