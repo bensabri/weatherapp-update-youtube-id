@@ -1,13 +1,13 @@
 import { FC, useState } from 'react';
-import { BsTrash2Fill } from 'react-icons/bs';
 import { IdataCity } from '../model';
 import { EditCity } from './EditCity';
 
 export interface Props {
 	dataCity: IdataCity[];
+	handleDelete: (id: string) => void;
 }
 
-export const CitiesList: FC<Props> = ({ dataCity }: Props) => {
+export const CitiesList: FC<Props> = ({ dataCity, handleDelete }: Props) => {
 	return (
 		<div className="col-span-3">
 			<h2 className="uppercase text-center mb-5 text-gray-700 font-bold">
@@ -33,7 +33,11 @@ export const CitiesList: FC<Props> = ({ dataCity }: Props) => {
 								{youtube_id}
 							</p>
 							{/* <BsTrash2Fill /> */}
-							<EditCity city={city} />
+							<EditCity
+								city={city}
+								youtube_id={youtube_id}
+								handleDelete={handleDelete}
+							/>
 						</div>
 					</div>
 				))}

@@ -30,13 +30,14 @@ export const AddIdCity: FC<Props> = ({
 		});
 	}, []);
 
-	console.log(dataCity);
+	const id: number = Math.floor(Math.random() * 100000 + 1);
 
 	const handleFormSubmit = (
 		event: React.FormEvent<HTMLFormElement>
 	): void => {
 		event.preventDefault();
 		axios.post('http://localhost:5000/api/insert', {
+			id: id,
 			country: country,
 			city: city,
 			youtube_id: youtubeId,
@@ -44,11 +45,17 @@ export const AddIdCity: FC<Props> = ({
 		setDataCity([
 			...dataCity,
 			{
+				id: id,
 				country: country,
 				city: city,
 				youtube_id: youtubeId,
 			},
 		]);
+	};
+
+	//delete function
+	const handleDelete = (id: string) => {
+		axios.delete(`http://localhost:5000/api/delete/${id}`);
 	};
 
 	const handleClearInput = () => {
@@ -133,6 +140,9 @@ export const AddIdCity: FC<Props> = ({
 							>
 								Clear
 							</button>
+							<button className="cursor-pointer hover:-translate-y-1 transition-all text-white bg-green-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base">
+								Update
+							</button>
 							<button
 								type="submit"
 								className="cursor-pointer hover:-translate-y-1 transition-all text-white bg-[#0081CB] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
@@ -144,7 +154,7 @@ export const AddIdCity: FC<Props> = ({
 				</div>
 				<div className="border-r-2 col-span-1 mx-auto" />
 
-				<CitiesList dataCity={dataCity} />
+				<CitiesList dataCity={dataCity} handleDelete={handleDelete} />
 			</div>
 		</div>
 	);

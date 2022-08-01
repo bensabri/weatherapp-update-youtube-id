@@ -1,18 +1,19 @@
 import { FC, useState } from 'react';
 import { Modal } from '@mantine/core';
 import { GoPencil } from 'react-icons/go';
-import axios from 'axios';
 
-export interface IEditCityProps {
+export interface Props {
 	city: string;
+	youtube_id: string;
+	handleDelete: (id: string) => void;
 }
 
-export const EditCity: FC<IEditCityProps> = ({ city }: IEditCityProps) => {
+export const EditCity: FC<Props> = ({
+	city,
+	youtube_id,
+	handleDelete,
+}: Props) => {
 	const [opened, setOpened] = useState<boolean>(false);
-
-	const handleDelete: Function = (id: number): void => {
-		axios.delete(`http://localhost:5000/api/delete/${id}`);
-	};
 
 	return (
 		<div className="col-span-1">
@@ -58,8 +59,8 @@ export const EditCity: FC<IEditCityProps> = ({ city }: IEditCityProps) => {
 						<button
 							className="hover:-translate-y-1 transition-all text-white bg-[#FF4D5A] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 							onClick={() => {
-								// handleDelete(id);
 								setOpened(false);
+								handleDelete(youtube_id);
 							}}
 						>
 							Delete

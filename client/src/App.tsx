@@ -8,7 +8,7 @@ const App: FC = () => {
 	const [country, setCountry] = useState<string>('');
 	const [city, setCity] = useState<string>('');
 	const [youtubeId, setYoutubeId] = useState<string>('');
-	const [newId, setNewId] = useState<string>('');
+	const [id, setId] = useState<number>();
 	const [editingCity, setEditingCity] = useState<boolean>(false);
 	const [dataCity, setDataCity] = useState<IdataCity[]>([]);
 
