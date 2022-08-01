@@ -2,6 +2,7 @@ import { useState, FC } from 'react';
 import './App.css';
 import { AddIdCity } from './components/AddIdCity';
 import { Header } from './components/Header';
+import { IdataCity } from './model';
 
 const App: FC = () => {
 	const [country, setCountry] = useState<string>('');
@@ -9,7 +10,7 @@ const App: FC = () => {
 	const [youtubeId, setYoutubeId] = useState<string>('');
 	const [newId, setNewId] = useState<string>('');
 	const [editingCity, setEditingCity] = useState<boolean>(false);
-	const [dataCity, setDataCity] = useState<any>([]);
+	const [dataCity, setDataCity] = useState<IdataCity[]>([]);
 
 	return (
 		<div className="bg-gray-100 h-screen">

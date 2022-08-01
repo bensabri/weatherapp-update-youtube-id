@@ -1,14 +1,13 @@
 import { FC, useState } from 'react';
 import { BsTrash2Fill } from 'react-icons/bs';
+import { IdataCity } from '../model';
 import { EditCity } from './EditCity';
 
-export interface ICitiesListProps {
-	dataCity: [];
+export interface Props {
+	dataCity: IdataCity[];
 }
 
-export const CitiesList: FC<ICitiesListProps> = ({
-	dataCity,
-}: ICitiesListProps) => {
+export const CitiesList: FC<Props> = ({ dataCity }: Props) => {
 	return (
 		<div className="col-span-3">
 			<h2 className="uppercase text-center mb-5 text-gray-700 font-bold">
@@ -22,7 +21,7 @@ export const CitiesList: FC<ICitiesListProps> = ({
 				{/* <BsTrash2Fill /> */}
 			</div>
 			<div className="overflow-y-scroll h-4/6">
-				{dataCity.map(({ city, country, youtube_id, id }, i) => (
+				{dataCity.map(({ city, country, youtube_id }, i) => (
 					<div key={i}>
 						<div className="grid grid-cols-6 px-0 gap-3 mb-2">
 							<p className="col-span-2 capitalize ">{country}</p>
@@ -34,7 +33,7 @@ export const CitiesList: FC<ICitiesListProps> = ({
 								{youtube_id}
 							</p>
 							{/* <BsTrash2Fill /> */}
-							<EditCity city={city} id={id} />
+							<EditCity city={city} />
 						</div>
 					</div>
 				))}

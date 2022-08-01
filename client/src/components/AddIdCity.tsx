@@ -1,16 +1,17 @@
 import { FC, useEffect } from 'react';
 import { CitiesList } from './CitiesList';
 import axios from 'axios';
+import { IdataCity } from '../model';
 
 interface Props {
 	country: string;
 	city: string;
 	youtubeId: string;
-	dataCity: [];
+	dataCity: IdataCity[];
 	setCountry: React.Dispatch<React.SetStateAction<string>>;
 	setCity: React.Dispatch<React.SetStateAction<string>>;
 	setYoutubeId: React.Dispatch<React.SetStateAction<string>>;
-	setDataCity: React.Dispatch<React.SetStateAction<[{}]>>;
+	setDataCity: React.Dispatch<React.SetStateAction<IdataCity[]>>;
 }
 
 export const AddIdCity: FC<Props> = ({
@@ -22,12 +23,14 @@ export const AddIdCity: FC<Props> = ({
 	youtubeId,
 	dataCity,
 	setDataCity,
-}) => {
+}: Props) => {
 	useEffect(() => {
 		axios.get('http://localhost:5000/api/get').then((res) => {
 			setDataCity(res.data);
 		});
 	}, []);
+
+	console.log(dataCity);
 
 	const handleFormSubmit = (
 		event: React.FormEvent<HTMLFormElement>

@@ -5,10 +5,9 @@ import axios from 'axios';
 
 export interface IEditCityProps {
 	city: string;
-	id: number;
 }
 
-export const EditCity: FC<IEditCityProps> = ({ city, id }: IEditCityProps) => {
+export const EditCity: FC<IEditCityProps> = ({ city }: IEditCityProps) => {
 	const [opened, setOpened] = useState<boolean>(false);
 
 	const handleDelete: Function = (id: number): void => {
@@ -59,7 +58,7 @@ export const EditCity: FC<IEditCityProps> = ({ city, id }: IEditCityProps) => {
 						<button
 							className="hover:-translate-y-1 transition-all text-white bg-[#FF4D5A] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 							onClick={() => {
-								handleDelete(id);
+								// handleDelete(id);
 								setOpened(false);
 							}}
 						>
