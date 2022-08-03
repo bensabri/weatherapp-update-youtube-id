@@ -75,8 +75,8 @@ export const AddIdCity: FC<Props> = ({
 	};
 
 	return (
-		<div className="flex justify-center items-center h-5/6">
-			<div className="md:grid grid-cols-7 space-y-5 md:space-y-0 w-full h-auto md:mx-6 bg-white shadow-xl rounded-lg px-10 py-10">
+		<div className="flex justify-center items-center md:h-5/6">
+			<div className="md:grid grid-cols-7 space-y-5 md:space-y-0 w-full h-3/4 overflow-hidden md:mx-6 bg-white shadow-xl rounded-lg px-10 py-10">
 				<div className=" flex flex-col col-span-3">
 					<h2 className="uppercase text-center mb-5 text-gray-700 font-bold">
 						add new video
@@ -153,7 +153,7 @@ export const AddIdCity: FC<Props> = ({
 						</div>
 					</form>
 				</div>
-				<div className="border-y md:border-x col-span-1 mx-auto" />
+				<div className="border-y md:border-x col-span-1 mx-auto h-5/6" />
 
 				<CitiesList
 					dataCity={dataCity}

@@ -14,7 +14,7 @@ export const CitiesList: FC<Props> = ({
 	setFetchCount,
 }: Props) => {
 	return (
-		<div className="col-span-3">
+		<div className="col-span-3 ">
 			<h2 className="uppercase text-center mb-5 text-gray-700 font-bold">
 				Cities List
 			</h2>
@@ -24,7 +24,7 @@ export const CitiesList: FC<Props> = ({
 				<p className="col-span-2 capitalize font-lg">video id</p>
 				<p className="col-span-1 capitalize font-lg">edit</p>
 			</div>
-			<div className="overflow-y-scroll h-4/6">
+			<div className="overflow-y-scroll h-60 md:h-3/6">
 				{dataCity.map(({ city, country, youtube_id, id }, i) => (
 					<div key={i}>
 						<div className="grid grid-cols-8 px-0 gap-2 mb-2">

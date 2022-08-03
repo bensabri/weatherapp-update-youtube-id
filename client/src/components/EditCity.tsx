@@ -39,10 +39,7 @@ export const EditCity: FC<Props> = ({
 				opened={opened}
 				onClose={() => setOpened(false)}
 			>
-				<h2
-					onClick={() => console.log(id)}
-					className="text-center text-xl"
-				>{`Edit City ${city}`}</h2>
+				<h2 className="text-center text-xl">{`Edit City ${city}`}</h2>
 				<div className="mx-10">
 					<form>
 						<div className="flex flex-col mb-5">
