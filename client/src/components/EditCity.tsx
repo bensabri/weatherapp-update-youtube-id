@@ -7,18 +7,17 @@ export interface Props {
 	id: number;
 	city: string;
 	handleDelete: (id: number) => void;
-	youtubeId: string;
-	setYoutubeId: React.Dispatch<React.SetStateAction<string>>;
+	setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const EditCity: FC<Props> = ({
 	city,
 	id,
 	handleDelete,
-	youtubeId,
-	setYoutubeId,
+	setFetchCount,
 }: Props) => {
 	const [opened, setOpened] = useState<boolean>(false);
+	const [youtubeId, setYoutubeId] = useState<string>('');
 
 	const handleUpdate = (id: number) => {
 		if (youtubeId) {
@@ -26,6 +25,8 @@ export const EditCity: FC<Props> = ({
 				id: id,
 				youtube_id: youtubeId,
 			});
+			setFetchCount((prev) => prev + 1);
+			setOpened(false);
 		} else return alert("Vous n'avez pas entrée de valeur");
 	};
 

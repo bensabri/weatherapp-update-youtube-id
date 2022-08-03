@@ -27,7 +27,7 @@ export const AddIdCity: FC<Props> = ({
 	setDataCity,
 	fetchCount,
 	setFetchCount,
-}: Props) => {
+}) => {
 	useEffect(() => {
 		axios.get('http://localhost:5000/api/get').then((res) => {
 			setDataCity(res.data);
@@ -144,13 +144,6 @@ export const AddIdCity: FC<Props> = ({
 						</div>
 
 						<div className="w-full flex justify-around ">
-							{/* <button
-								onClick={handleClearInput}
-								className="drop-shadow-xl cursor-pointer focus:scale-90 hover:-translate-y-1 transition-all text-white bg-red-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base"
-							>
-								Clear
-							</button> */}
-
 							<button
 								type="submit"
 								className="drop-shadow-xl cursor-pointer focus:scale-90 hover:-translate-y-1 transition-all text-white bg-[#0081CB] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
@@ -160,13 +153,12 @@ export const AddIdCity: FC<Props> = ({
 						</div>
 					</form>
 				</div>
-				<div className="border-b-2 md:border-r-2 col-span-1 mx-auto" />
+				<div className="border-y md:border-x col-span-1 mx-auto" />
 
 				<CitiesList
 					dataCity={dataCity}
 					handleDelete={handleDelete}
-					setYoutubeId={setYoutubeId}
-					youtubeId={youtubeId}
+					setFetchCount={setFetchCount}
 				/>
 			</div>
 		</div>
