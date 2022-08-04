@@ -2,11 +2,14 @@ import { FC, useEffect } from 'react';
 import { CitiesList } from './CitiesList';
 import axios from 'axios';
 import { IdataCity } from '../model';
+import { ICity as IProps } from '../App';
 
 interface Props {
 	country: string;
 	city: string;
 	youtubeId: string;
+	cities: IProps['city'];
+	setCities: React.Dispatch<React.SetStateAction<IProps['city']>>;
 	dataCity: IdataCity[];
 	setCountry: React.Dispatch<React.SetStateAction<string>>;
 	setCity: React.Dispatch<React.SetStateAction<string>>;
@@ -23,6 +26,8 @@ export const AddIdCity: FC<Props> = ({
 	country,
 	city,
 	youtubeId,
+	cities,
+	setCities,
 	dataCity,
 	setDataCity,
 	fetchCount,
@@ -31,6 +36,7 @@ export const AddIdCity: FC<Props> = ({
 	useEffect(() => {
 		axios.get('http://localhost:5000/api/get').then((res) => {
 			setDataCity(res.data);
+			setCities(res.data);
 		});
 	}, [fetchCount]);
 
@@ -146,7 +152,7 @@ export const AddIdCity: FC<Props> = ({
 						<div className="w-full flex justify-around ">
 							<button
 								type="submit"
-								className="drop-shadow-xl cursor-pointer focus:scale-90 hover:-translate-y-1 transition-all text-white bg-[#0081CB] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+								className="drop-shadow-xl cursor-pointer hover:-translate-y-1 focus:scale-90 transition-transform text-white bg-[#0081CB] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 							>
 								Send
 							</button>
@@ -156,6 +162,7 @@ export const AddIdCity: FC<Props> = ({
 				<div className="border-y md:border-x col-span-1 mx-auto h-5/6" />
 
 				<CitiesList
+					cities={cities}
 					dataCity={dataCity}
 					handleDelete={handleDelete}
 					setFetchCount={setFetchCount}

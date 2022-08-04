@@ -85,12 +85,12 @@ export const EditCity: FC<Props> = ({
 							onClick={() => {
 								handleUpdate(id);
 							}}
-							className="cursor-pointer focus:scale-90 hover:-translate-y-1 transition-all text-white bg-green-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+							className="cursor-pointer focus:scale-90 hover:-translate-y-1 transition-transform text-white bg-green-500 tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 						>
 							Update
 						</button>
 						<button
-							className="hover:-translate-y-1 focus:scale-90 transition-all text-white bg-[#FF4D5A] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
+							className="hover:-translate-y-1 focus:scale-90 transition-transform text-white bg-[#FF4D5A] tracking-widest font-semibold rounded-full py-2 px-5 text-base"
 							onClick={() => {
 								setOpened(false);
 								handleDelete(id);
