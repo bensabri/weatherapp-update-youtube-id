@@ -17,16 +17,20 @@ export const EditCity: FC<Props> = ({
 	setFetchCount,
 }: Props) => {
 	const [opened, setOpened] = useState<boolean>(false);
-	const [youtubeId, setYoutubeId] = useState<string>('');
+	const [newYoutubeId, setNewYoutubeId] = useState<string>('');
 
 	const handleUpdate = (id: number) => {
-		if (youtubeId) {
+		if (newYoutubeId) {
 			axios.put('http://localhost:5000/api/update', {
 				id: id,
-				youtube_id: youtubeId,
+				youtube_id: newYoutubeId,
 			});
 			setFetchCount((prev) => prev + 1);
 			setOpened(false);
+			console.log({
+				id: id,
+				youtube_id: newYoutubeId,
+			});
 		} else return alert("Vous n'avez pas entrée de valeur");
 	};
 
@@ -73,9 +77,10 @@ export const EditCity: FC<Props> = ({
 								name="video_id"
 								type="text"
 								placeholder="enter video id"
+								value={newYoutubeId}
 								onChange={(
 									event: React.ChangeEvent<HTMLInputElement>
-								) => setYoutubeId(event.target.value)}
+								) => setNewYoutubeId(event.target.value)}
 								required
 							/>
 						</div>

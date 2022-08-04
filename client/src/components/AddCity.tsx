@@ -1,70 +1,70 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { CitiesList } from './CitiesList';
 import axios from 'axios';
 import { IdataCity } from '../model';
-import { ICity as IProps } from '../App';
+import { ICity as IProps } from '../model';
 
 interface Props {
-	country: string;
-	city: string;
-	youtubeId: string;
 	cities: IProps['city'];
 	setCities: React.Dispatch<React.SetStateAction<IProps['city']>>;
-	dataCity: IdataCity[];
-	setCountry: React.Dispatch<React.SetStateAction<string>>;
-	setCity: React.Dispatch<React.SetStateAction<string>>;
-	setYoutubeId: React.Dispatch<React.SetStateAction<string>>;
-	setDataCity: React.Dispatch<React.SetStateAction<IdataCity[]>>;
 	fetchCount: number;
 	setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const AddIdCity: FC<Props> = ({
-	setCountry,
-	setCity,
-	setYoutubeId,
-	country,
-	city,
-	youtubeId,
+export const AddCity: FC<Props> = ({
 	cities,
 	setCities,
-	dataCity,
-	setDataCity,
 	fetchCount,
 	setFetchCount,
 }) => {
+	const id: number = Math.floor(Math.random() * 100000 + 1);
+
+	const [input, setInput] = useState({
+		id: id,
+		country: '',
+		city: '',
+		youtube_id: '',
+	});
+
 	useEffect(() => {
 		axios.get('http://localhost:5000/api/get').then((res) => {
-			setDataCity(res.data);
+			// setDataCity(res.data);
 			setCities(res.data);
 		});
 	}, [fetchCount]);
 
-	const id: number = Math.floor(Math.random() * 100000 + 1);
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInput({
+			...input,
+			[e.target.name]: e.target.value,
+		});
+	};
 
 	const handleFormSubmit = (
 		event: React.FormEvent<HTMLFormElement>
 	): void => {
 		event.preventDefault();
 		try {
-			axios.post('http://localhost:5000/api/insert', {
-				id: id,
-				country: country,
-				city: city,
-				youtube_id: youtubeId,
-			});
-			setDataCity([
-				...dataCity,
+			axios.post('http://localhost:5000/api/insert', input);
+			setCities([
+				...cities,
 				{
 					id: id,
-					country: country,
-					city: city,
-					youtube_id: youtubeId,
+					country: input.country,
+					city: input.city,
+					youtube_id: input.youtube_id,
 				},
 			]);
-			setCountry('');
-			setCity('');
-			setYoutubeId('');
+			setFetchCount((prev) => prev + 1);
+			// setCities([
+			// 	...cities,
+			// 	{
+			// 		id: 0,
+			// 		country: '',
+			// 		city: '',
+			// 		youtube_id: '',
+			// 	},
+			// ]);
 		} catch (error) {
 			console.log(error);
 		}
@@ -101,10 +101,8 @@ export const AddIdCity: FC<Props> = ({
 								name="country"
 								type="text"
 								placeholder="ex: France"
-								value={country}
-								onChange={(
-									event: React.ChangeEvent<HTMLInputElement>
-								) => setCountry(event.target.value)}
+								value={input.country}
+								onChange={handleChange}
 								required
 							/>
 						</div>
@@ -121,10 +119,8 @@ export const AddIdCity: FC<Props> = ({
 								name="city"
 								type="text"
 								placeholder="ex: Paris"
-								value={city}
-								onChange={(
-									event: React.ChangeEvent<HTMLInputElement>
-								) => setCity(event.target.value)}
+								value={input.city}
+								onChange={handleChange}
 								required
 							/>
 						</div>
@@ -141,10 +137,8 @@ export const AddIdCity: FC<Props> = ({
 								name="youtube_id"
 								type="text"
 								placeholder="ex: 5v4dd5g4f"
-								value={youtubeId}
-								onChange={(
-									event: React.ChangeEvent<HTMLInputElement>
-								) => setYoutubeId(event.target.value)}
+								value={input.youtube_id}
+								onChange={handleChange}
 								required
 							/>
 						</div>
@@ -163,7 +157,6 @@ export const AddIdCity: FC<Props> = ({
 
 				<CitiesList
 					cities={cities}
-					dataCity={dataCity}
 					handleDelete={handleDelete}
 					setFetchCount={setFetchCount}
 				/>

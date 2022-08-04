@@ -1,20 +1,19 @@
 import { FC } from 'react';
-import { IdataCity } from '../model';
 import { EditCity } from './EditCity';
-import { ICity as IProps } from '../App';
+import { ICity as IProps } from '../model';
 
 interface Props {
 	cities: IProps['city'];
-	dataCity: IdataCity[];
 	handleDelete: (id: number) => void;
 	setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const CitiesList: FC<Props> = ({
-	dataCity,
+	cities,
 	handleDelete,
 	setFetchCount,
 }: Props) => {
+	// console.log(cities);
 	return (
 		<div className="col-span-3 ">
 			<h2 className="uppercase text-center mb-5 text-gray-700 font-bold">
@@ -26,9 +25,9 @@ export const CitiesList: FC<Props> = ({
 				<p className="col-span-2 capitalize font-lg">video id</p>
 				<p className="col-span-1 capitalize font-lg">edit</p>
 			</div>
-			{dataCity ? (
+			{cities ? (
 				<div className="overflow-y-scroll h-60 md:h-3/6">
-					{dataCity.map(({ city, country, youtube_id, id }, i) => (
+					{cities.map(({ city, country, youtube_id, id }, i) => (
 						<div key={i}>
 							<div className="grid grid-cols-8 px-0 gap-2 mb-2">
 								<p className="col-span-2 capitalize font-thin">
