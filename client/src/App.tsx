@@ -2,7 +2,7 @@ import { useState, FC } from 'react';
 import './App.css';
 import { AddCity } from './components/AddCity';
 import { Header } from './components/Header';
-import { IdataCity, ICity } from './model';
+import { ICity } from './model';
 
 const App: FC = () => {
 	const [cities, setCities] = useState<ICity['city']>([

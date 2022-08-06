@@ -33,7 +33,7 @@ export const AddCity: FC<Props> = ({
 		});
 	}, [fetchCount]);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		setInput({
 			...input,
 			[e.target.name]: e.target.value,
