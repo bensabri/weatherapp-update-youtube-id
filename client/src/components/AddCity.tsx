@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { CitiesList } from './CitiesList';
 import axios from 'axios';
-import { IdataCity } from '../model';
 import { ICity as IProps } from '../model';
 
 interface Props {
